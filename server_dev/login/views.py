@@ -24,18 +24,25 @@ class AppLogin(APIView):
 
 class RegistUser(APIView):
     def post(self, request):
-        serializer = LoginUserSerializer(request.data)
+        print(request.data)
 
-        # 아이디 중복 확인
-        if LoginUser.objects.filter(user_id=serializer.data['user_id']).exists():
-            user = LoginUser.objects.filter(user_id=serializer.data['user_id']).first()
-            data = dict(
-                msg='이미 존재하는 아이디입니다.',
-                user_id=user.user_id,
-                user_pw=user.user_pw
-            )
-            return Response(data)
+        return Response(status=200)
 
-        user = serializer.create(request.data)
 
-        return Response(LoginUserSerializer(user).data)
+# class RegistUser(APIView):
+#     def post(self, request):
+#         serializer = LoginUserSerializer(request.data)
+#
+#         # 아이디 중복 확인
+#         if LoginUser.objects.filter(user_id=serializer.data['user_id']).exists():
+#             user = LoginUser.objects.filter(user_id=serializer.data['user_id']).first()
+#             data = dict(
+#                 msg='이미 존재하는 아이디입니다.',
+#                 user_id=user.user_id,
+#                 user_pw=user.user_pw
+#             )
+#             return Response(data)
+#
+#         user = serializer.create(request.data)
+#
+#         return Response(LoginUserSerializer(user).data)
