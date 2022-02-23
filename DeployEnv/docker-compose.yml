@@ -1,0 +1,32 @@
+version: '3'
+services:
+  django:
+    build:
+      context: ../server_dev
+      dockerfile: Dockerfile
+    command: uwsgi --ini uwsgi.ini
+    volumes:
+      - ../server_dev:/srv/server_dev
+      - ./log:/var/log/uwsgi
+
+  nginx:
+    restart: always
+    build:
+      context: ../nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - django
+    volumes:
+      - ../server_dev:/srv/server_dev
+      - ./log:/var/log/nginx
+
+  mysql:
+    build:
+      context: ../mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - ../mysql/data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: admin123!

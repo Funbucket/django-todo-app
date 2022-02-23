@@ -1,0 +1,10 @@
+version: '3'
+services:
+  django:
+    build:
+      context: ../server_dev
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../server_dev:/srv/server_dev
